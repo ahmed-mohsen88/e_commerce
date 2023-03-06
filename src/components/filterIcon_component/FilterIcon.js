@@ -4,7 +4,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setFilter } from "../../redux/filterSlice";
-import { filteredCollected, newFilter } from "../../assets/functions";
+import { filteredCollected, newFilter } from "../../assets/functions/functions";
 import { productsSelector } from "../../redux/mainSlice";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
 import Mapperr from "./Mapperr";

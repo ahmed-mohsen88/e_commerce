@@ -6,7 +6,10 @@ import {
   setAddItems,
 } from "../../redux/shoppingItmesSlice.js";
 import { setaddOne } from "../../redux/addSlice.js";
-import { StyledBoldParagraph, StyledParagraph } from "../../assets/styled.js";
+import {
+  StyledBoldParagraph,
+  StyledParagraph,
+} from "../../assets/styled_components/styled.js";
 import ShoppingItemsContents from "./ShoppingItemsContents.js";
 import {
   deleteItem,

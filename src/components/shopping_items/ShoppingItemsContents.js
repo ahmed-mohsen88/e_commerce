@@ -1,6 +1,9 @@
 import React from "react";
 import { Avatar, Button, Grid, Typography } from "@mui/material";
-import { StyledBoldParagraph, StyledParagraph } from "../../assets/styled";
+import {
+  StyledBoldParagraph,
+  StyledParagraph,
+} from "../../assets/styled_components/styled";
 
 function ShoppingItemsContents({
   shoppingItemsSelector,

@@ -1,6 +1,6 @@
 import React from "react";
 import { Checkbox, Grid, Typography } from "@mui/material";
-import { arrayName } from "../../assets/functions";
+import { arrayName } from "../../assets/functions/functions";
 
 function Mapperr({ handelCheckbox, searchProp, filterStateSelector }) {
   return (

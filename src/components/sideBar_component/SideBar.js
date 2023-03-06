@@ -3,7 +3,7 @@ import React from "react";
 import { productsSelector } from "../../redux/mainSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setFilter } from "../../redux/filterSlice";
-import { newFilter, filteredCollected } from "../../assets/functions";
+import { newFilter, filteredCollected } from "../../assets/functions/functions";
 import Color from "./Color";
 import Gender from "./Gender";
 import Price from "./Price";
