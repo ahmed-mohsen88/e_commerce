@@ -1,5 +1,5 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import { Alert, Box, Button, Grid, Snackbar, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addOneSelector, setaddOne } from "../redux/addSlice.js";
 import {
@@ -13,10 +13,16 @@ function ProductCard({ name, price, image, id, quantity }) {
   const add = useSelector(addOneSelector);
   const dispatch = useDispatch(add);
 
+  const [errorMessage, seterrorMessage] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    seterrorMessage(false);
+  };
   // #### Add to cart
   const shoppingItemsSelector = useSelector(addItemsSelector);
-  const handelAdd = (e, id, name, price, image) => {
-    dispatch(setaddOne(1));
+  const handelAdd = (e, id, name, price, image, quantity) => {
     if (!shoppingItemsSelector.length) {
       dispatch(
         setAddItems([
@@ -26,18 +32,35 @@ function ProductCard({ name, price, image, id, quantity }) {
             id: id,
             image: image,
             count: 1,
+            quantity: quantity - 1,
           },
         ])
       );
+      dispatch(setaddOne(1));
+      seterrorMessage(false);
     } else {
       const exist_Or_Not = shoppingItemsSelector.some((shoppingItems) => {
         return shoppingItems.id === id;
       });
       if (exist_Or_Not) {
         const addExist = shoppingItemsSelector.map((shoppingItems) => {
-          if (shoppingItems.id === id) {
-            const plusCount = shoppingItems.count + 1;
-            shoppingItems = { ...shoppingItems, count: plusCount };
+          if (shoppingItems.quantity !== 0) {
+            if (shoppingItems.id === id) {
+              const plusCount = shoppingItems.count + 1;
+              const qty = shoppingItems.quantity - 1;
+              shoppingItems = {
+                ...shoppingItems,
+                count: plusCount,
+                quantity: qty,
+              };
+              dispatch(setaddOne(1));
+              seterrorMessage(false);
+            }
+          } else {
+            shoppingItems = {
+              ...shoppingItems,
+            };
+            seterrorMessage(true);
           }
           return shoppingItems;
         });
@@ -50,8 +73,11 @@ function ProductCard({ name, price, image, id, quantity }) {
             id: id,
             image: image,
             count: 1,
+            quantity: quantity - 1,
           })
         );
+        dispatch(setaddOne(1));
+        seterrorMessage(false);
       }
     }
   };
@@ -74,6 +100,17 @@ function ProductCard({ name, price, image, id, quantity }) {
       sx={{ marginLeft: "0 !important" }}
       ml={0}
     >
+      {errorMessage && (
+        <Snackbar
+          open={errorMessage}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+            No more items Left in Store{" "}
+          </Alert>
+        </Snackbar>
+      )}
       <Grid container justifyContent={"space-between"}>
         <Typography variant="body1" fontSize={"1rem"} fontWeight={"800"}>
           {name}
@@ -82,10 +119,9 @@ function ProductCard({ name, price, image, id, quantity }) {
           variant="body1"
           fontSize={"1rem"}
           fontWeight={"300"}
-          color={"grey"}
+          color={quantity === 0 ? "error" : "grey"}
         >
-          {quantity}
-          {" in Store"}
+          {quantity === 0 ? "Not available" : `${quantity} in Store`}
         </Typography>
       </Grid>
       <Grid position={"relative"} minHeight={"120px"}>
@@ -113,19 +149,21 @@ function ProductCard({ name, price, image, id, quantity }) {
           {"Rs "}
           {price}
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "black",
-            color: "white",
-            // fontSize: ".8rem",
-          }}
-          onClick={(e) => {
-            handelAdd(e, id, name, price, image);
-          }}
-        >
-          Add to cart
-        </Button>
+        {quantity !== 0 && (
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              // fontSize: ".8rem",
+            }}
+            onClick={(e) => {
+              handelAdd(e, id, name, price, image, quantity);
+            }}
+          >
+            Add to cart
+          </Button>
+        )}
       </Grid>
     </Grid>
   );
