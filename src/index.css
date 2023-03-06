@@ -1,0 +1,34 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.MuiFormControlLabel-root {
+  height: 2vw;
+}
+
+.MuiGrid-root > .MuiGrid-item {
+  padding-top: 0 !important;
+}
+.MuiGrid-root {
+  margin-left: 0 !important;
+}
+@media screen and (min-width: 677px) and (max-width: 1500px) {
+  * {
+    font-size: 15px;
+  }
+}
+
+
