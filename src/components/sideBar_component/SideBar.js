@@ -1,9 +1,9 @@
 import { Box, Divider, Grid, List, Stack, useMediaQuery } from "@mui/material";
 import React from "react";
-import { productsSelector } from "../redux/mainSlice";
+import { productsSelector } from "../../redux/mainSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { filterSelector, setFilter } from "../redux/filterSlice";
-import { newFilter, filteredCollected } from "../assets/functions";
+import { filterSelector, setFilter } from "../../redux/filterSlice";
+import { newFilter, filteredCollected } from "../../assets/functions";
 import Color from "./Color";
 import Gender from "./Gender";
 import Price from "./Price";

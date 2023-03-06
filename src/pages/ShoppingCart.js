@@ -1,5 +1,5 @@
 import { Container, Grid, Stack, Typography } from "@mui/material";
-import ShoppingItems from "../components/ShoppingItems";
+import ShoppingItems from "../components/shopping_items/ShoppingItems";
 import React from "react";
 import "../assets/css/shoppingCart.css";
 

@@ -11,8 +11,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import ProductCard from "../components/ProductCard";
 import { useSelector } from "react-redux";
 import { productsSelector } from "../redux/mainSlice";
-import Sidebar from "../components/SideBar";
-import FilterIcon from "../components/FilterIcon";
+import Sidebar from "../components/sideBar_component/SideBar";
+import FilterIcon from "../components/filterIcon_component/FilterIcon";
 function Home() {
   // #### global vars
   const products = useSelector(productsSelector);

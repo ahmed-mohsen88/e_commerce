@@ -1,14 +1,17 @@
-import { Grid, useMediaQuery } from "@mui/material";
-import { addItemsSelector, setAddItems } from "../redux/shoppingItmesSlice.js";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setaddOne } from "../redux/addSlice.js";
-import { StyledBoldParagraph, StyledParagraph } from "../assets/styled.js";
+import { Grid, useMediaQuery } from "@mui/material";
+import {
+  addItemsSelector,
+  setAddItems,
+} from "../../redux/shoppingItmesSlice.js";
+import { setaddOne } from "../../redux/addSlice.js";
+import { StyledBoldParagraph, StyledParagraph } from "../../assets/styled.js";
 import ShoppingItemsContents from "./ShoppingItemsContents.js";
 import {
   deleteItem,
   increaseCount,
-} from "../assets/functions/shoppingItems_functions.js";
+} from "../../assets/functions/shoppingItems_functions.js";
 
 function ShoppingItems() {
   // #### global variables

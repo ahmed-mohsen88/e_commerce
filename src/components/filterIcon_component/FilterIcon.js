@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Box, Button, Checkbox, Typography, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useDispatch, useSelector } from "react-redux";
-import { filterSelector, setFilter } from "../redux/filterSlice";
-import { filteredCollected, newFilter, arrayName } from "../assets/functions";
-import { productsSelector } from "../redux/mainSlice";
+import { filterSelector, setFilter } from "../../redux/filterSlice";
+import { filteredCollected, newFilter } from "../../assets/functions";
+import { productsSelector } from "../../redux/mainSlice";
 import ClickAwayListener from "@mui/base/ClickAwayListener";
 import Mapperr from "./Mapperr";
 

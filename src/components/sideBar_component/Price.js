@@ -1,6 +1,6 @@
 import React from "react";
 import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
-import { filterSelector } from "../redux/filterSlice";
+import { filterSelector } from "../../redux/filterSlice";
 import { useSelector } from "react-redux";
 function Price({handelCheckbox}) {
   const filterStateSelector = useSelector(filterSelector);

@@ -1,12 +1,11 @@
 import { Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
 import React from "react";
-import { filterSelector, setFilter } from "../redux/filterSlice";
+import { filterSelector } from "../../redux/filterSlice";
 import { useSelector } from "react-redux";
 
-
-function Color({handelCheckbox}) {
-    const filterStateSelector = useSelector(filterSelector);
-    return (
+function Color({ handelCheckbox }) {
+  const filterStateSelector = useSelector(filterSelector);
+  return (
     <Stack>
       <Typography variant="h5">Color</Typography>
       <FormControlLabel
