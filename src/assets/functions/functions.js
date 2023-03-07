@@ -42,7 +42,7 @@ export const newFilter = (products, filters) => {
   });
 };
 
-export const filteredCollected = (filterStateClone, color, gender) => {
+export const filteredCollected = (filterStateClone) => {
   const collectedTrueKeys = {
     color: [],
     gender: [],

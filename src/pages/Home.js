@@ -13,11 +13,12 @@ import { useSelector } from "react-redux";
 import { productsSelector } from "../redux/mainSlice";
 import Sidebar from "../components/sideBar_component/SideBar";
 import FilterIcon from "../components/filterIcon_component/FilterIcon";
+import { searchResult } from "../assets/functions/home_functions";
 function Home() {
   // #### global vars
   const products = useSelector(productsSelector);
   const [stateProduct, setStateProduct] = useState([]);
-  const matches = useMediaQuery("(max-width:500px)");
+  const matches = useMediaQuery("(max-width:973px)");
 
   useEffect(() => {
     setStateProduct(products);
@@ -47,35 +48,32 @@ function Home() {
   useEffect(() => {
     inputRef.current = input;
   }, [input]);
-  // ### function
+  // ### search function
   const handelSearch = (e) => {
     setinput(e.target.value);
     // if user ++ input
     if (e.target.value.length - inputRef.current.length > 0) {
-      const searchResult = products?.filter((product) => {
-        return product?.name?.toLowerCase()?.includes(input.toLowerCase());
-      });
-      setStateProduct(searchResult);
+      const result = searchResult(products, input);
+      setStateProduct(result);
       // if user delete
     } else if (e.target.value.length - inputRef.current.length < 0) {
       setStateProduct(products);
-      const searchResult = products?.filter((product) => {
-        return product?.name?.toLowerCase()?.includes(input.toLowerCase());
-      });
-      setStateProduct(searchResult);
+      const result = searchResult(products, input);
+      setStateProduct(result);
+      // if search input === ""
     } else if (e.target.value === "") {
       setStateProduct(products);
     }
   };
-  const handelChange = (x) => {
-    setStateProduct(x);
+  const handelChange = (productsFilter) => {
+    setStateProduct(productsFilter);
   };
 
   return (
     <Container sx={{ display: "flex" }} maxWidth="100%">
       <Sidebar
         stateProduct={stateProduct}
-        handelChange={(x) => handelChange(x)}
+        handelChange={(productsFilter) => handelChange(productsFilter)}
       />
 
       <Stack
@@ -107,10 +105,11 @@ function Home() {
               }}
             />
           </Grid>
+          {/* filter icon appear in 500 px width */}
           {matches && (
             <FilterIcon
-              handelChange={(x) => {
-                handelChange(x);
+              handelChange={(productsFilter) => {
+                handelChange(productsFilter);
               }}
             />
           )}
@@ -123,11 +122,12 @@ function Home() {
           padding={"20px"}
           rowSpacing={1}
           columnSpacing={2}
-          rowGap={"3vw"}
+          rowGap={{ xs: "10vw", md: "3vw" }}
           columnGap={"2vw"}
           columns={16}
           width={"100%"}
         >
+          {/* products card */}
           {productsCardSection}
         </Grid>
       </Stack>

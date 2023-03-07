@@ -83,21 +83,26 @@ function FilterIcon({ handelChange }) {
         });
       }}
     >
-      <Grid position={"relative"} width="46%">
+      <Grid
+        position={"relative"}
+        width="46%"
+        container
+        justifyContent={"flex-start"}
+      >
         {/* main button */}
         <Button
           onClick={() => {
             handelFilterIcon("mainFilter");
           }}
         >
-          <FilterAltIcon sx={{ color: "black" }} />
+          <FilterAltIcon sx={{ color: "black", alignSelf: "flex-start" }} />
         </Button>
         {filterState.mainFilter && (
           <Box display="flex" flexDirection="column" alignItems="flex-start">
             <Grid>
               {checkButton("color")}
               {filterState.color && (
-                <Grid position={"absolute"} top={"8vw"} left={"16.2vw"}>
+                <Grid>
                   <Mapperr
                     handelCheckbox={handelCheckbox}
                     filterStateSelector={filterStateSelector}
@@ -109,7 +114,7 @@ function FilterIcon({ handelChange }) {
             <Grid>
               {checkButton("price")}
               {filterState.price && (
-                <Grid position={"absolute"} top={"8vw"} left={"16.2vw"}>
+                <Grid>
                   <Mapperr
                     handelCheckbox={handelCheckbox}
                     filterStateSelector={filterStateSelector}
@@ -120,7 +125,7 @@ function FilterIcon({ handelChange }) {
             </Grid>
             {checkButton("gender")}
             {filterState.gender && (
-              <Grid position={"absolute"} top={"8vw"} left={"16.2vw"}>
+              <Grid>
                 <Mapperr
                   handelCheckbox={handelCheckbox}
                   filterStateSelector={filterStateSelector}
@@ -130,7 +135,7 @@ function FilterIcon({ handelChange }) {
             )}
             {checkButton("type")}
             {filterState.type && (
-              <Grid position={"absolute"} top={"8vw"} left={"16.2vw"}>
+              <Grid>
                 <Mapperr
                   handelCheckbox={handelCheckbox}
                   filterStateSelector={filterStateSelector}

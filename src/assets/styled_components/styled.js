@@ -4,7 +4,7 @@ export const StyledParagraph = (props) => (
   <Typography
     component={"p"}
     sx={{
-      fontSize: { xs: "10px", md: "15px" },
+      fontSize: { xs: "10px", md: "13px", lg: "15px" },
     }}
   >
     {props.children}
@@ -14,7 +14,7 @@ export const StyledBoldParagraph = (props) => (
   <Typography
     component={"p"}
     sx={{
-      fontSize: { xs: "10px", md: "15px" },
+      fontSize: { xs: "10px", md: "13px", lg: "15px" },
       fontWeight: "bold",
     }}
   >

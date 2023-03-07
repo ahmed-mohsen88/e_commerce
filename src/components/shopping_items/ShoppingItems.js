@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Alert, Grid, Snackbar, useMediaQuery } from "@mui/material";
 import {
   addItemsSelector,
   setAddItems,
@@ -21,6 +21,7 @@ function ShoppingItems() {
   const matches = useMediaQuery("(max-width:500px)");
   const shoppingItemsSelector = useSelector(addItemsSelector);
   const dispatch = useDispatch();
+  const [errorMessage, seterrorMessage] = useState(false);
 
   // #### state to get total price
   const [totalSum, settotalSum] = useState(0);
@@ -44,8 +45,12 @@ function ShoppingItems() {
     if (shoppingItem.count === 0) {
       const filteredArray = deleteItem(shoppingItem, shoppingItemsSelector);
       dispatch(setAddItems(filteredArray));
+    } else if (shoppingItem.quantity === 0 && addOrSub === 1) {
+      dispatch(setaddOne(0));
+      seterrorMessage(true);
     } else {
       dispatch(setaddOne(addOrSub));
+      seterrorMessage(false);
     }
   };
 
@@ -53,6 +58,14 @@ function ShoppingItems() {
     const filteredArray = deleteItem(shoppingItem, shoppingItemsSelector);
     dispatch(setAddItems(filteredArray));
     dispatch(setaddOne(-1 * shoppingItem.count));
+  };
+
+  // click away state
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    seterrorMessage(false);
   };
 
   return (
@@ -75,6 +88,21 @@ function ShoppingItems() {
       >
         <StyledBoldParagraph>Total Amount{": Rs "}</StyledBoldParagraph>
         <StyledParagraph> {totalSum}</StyledParagraph>
+        {errorMessage && (
+          <Snackbar
+            open={errorMessage}
+            autoHideDuration={6000}
+            onClose={handleClose}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              No more items Left in Store
+            </Alert>
+          </Snackbar>
+        )}
       </Grid>
     </>
   );

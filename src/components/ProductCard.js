@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Grid, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Button, Grid, Snackbar } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addOneSelector, setaddOne } from "../redux/addSlice.js";
@@ -7,13 +7,21 @@ import {
   setAddItems,
   setAddExistingShoppingItem,
 } from "../redux/shoppingItmesSlice.js";
+import { exist_Or_Not } from "../assets/functions/shoppingItems_functions.js";
+import {
+  StyledBoldParagraph,
+  StyledParagraph,
+} from "../assets/styled_components/styled.js";
 
 function ProductCard({ name, price, image, id, quantity }) {
   // #### global vars
   const add = useSelector(addOneSelector);
   const dispatch = useDispatch(add);
+  const shoppingItemsSelector = useSelector(addItemsSelector);
 
+  // error message state
   const [errorMessage, seterrorMessage] = useState(false);
+  // click away state
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -21,8 +29,8 @@ function ProductCard({ name, price, image, id, quantity }) {
     seterrorMessage(false);
   };
   // #### Add to cart
-  const shoppingItemsSelector = useSelector(addItemsSelector);
   const handelAdd = (e, id, name, price, image, quantity) => {
+    // adding products if cart total empty
     if (!shoppingItemsSelector.length) {
       dispatch(
         setAddItems([
@@ -39,12 +47,14 @@ function ProductCard({ name, price, image, id, quantity }) {
       dispatch(setaddOne(1));
       seterrorMessage(false);
     } else {
-      const exist_Or_Not = shoppingItemsSelector.some((shoppingItems) => {
-        return shoppingItems.id === id;
-      });
-      if (exist_Or_Not) {
+      //  function return product count +1 and product quantity -1 if product available in store OR
+      //  return same count & quantity & error message if user add more than available
+      const productExist = exist_Or_Not(shoppingItemsSelector, id);
+      if (productExist) {
+        // increase count if product exists
         const addExist = shoppingItemsSelector.map((shoppingItems) => {
           if (shoppingItems.quantity !== 0) {
+            // increase count of products if product exists in the cart
             if (shoppingItems.id === id) {
               const plusCount = shoppingItems.count + 1;
               const qty = shoppingItems.quantity - 1;
@@ -57,6 +67,7 @@ function ProductCard({ name, price, image, id, quantity }) {
               seterrorMessage(false);
             }
           } else {
+            // return same cart if user add more than available quantity
             shoppingItems = {
               ...shoppingItems,
             };
@@ -66,6 +77,7 @@ function ProductCard({ name, price, image, id, quantity }) {
         });
         dispatch(setAddItems(addExist));
       } else {
+        // add another product not included in the cart
         dispatch(
           setAddExistingShoppingItem({
             name: name,
@@ -86,6 +98,7 @@ function ProductCard({ name, price, image, id, quantity }) {
     <Grid
       item
       key={id}
+      sm={7}
       md={5}
       minHeight={"250px"}
       maxHeight={"22%"}
@@ -111,19 +124,25 @@ function ProductCard({ name, price, image, id, quantity }) {
           </Alert>
         </Snackbar>
       )}
+      {/* card top */}
       <Grid container justifyContent={"space-between"}>
-        <Typography variant="body1" fontSize={"1rem"} fontWeight={"800"}>
+        <StyledBoldParagraph
+          variant="body1"
+          fontSize={"1rem"}
+          fontWeight={"800"}
+        >
           {name}
-        </Typography>
-        <Typography
+        </StyledBoldParagraph>
+        <StyledParagraph
           variant="body1"
           fontSize={"1rem"}
           fontWeight={"300"}
           color={quantity === 0 ? "error" : "grey"}
         >
           {quantity === 0 ? "Not available" : `${quantity} in Store`}
-        </Typography>
+        </StyledParagraph>
       </Grid>
+      {/* card image */}
       <Grid position={"relative"} minHeight={"120px"}>
         <Box
           borderRadius={"9px"}
@@ -135,12 +154,13 @@ function ProductCard({ name, price, image, id, quantity }) {
           zIndex={0}
         />
       </Grid>
+      {/* card bottom */}
       <Grid
         justifyContent={"space-between"}
         alignItems={"center"}
         display={"flex"}
       >
-        <Typography
+        <StyledBoldParagraph
           variant="body1"
           // fontSize={"1rem"}
           fontWeight={"800"}
@@ -148,7 +168,7 @@ function ProductCard({ name, price, image, id, quantity }) {
         >
           {"Rs "}
           {price}
-        </Typography>
+        </StyledBoldParagraph>
         {quantity !== 0 && (
           <Button
             variant="contained"
@@ -161,7 +181,7 @@ function ProductCard({ name, price, image, id, quantity }) {
               handelAdd(e, id, name, price, image, quantity);
             }}
           >
-            Add to cart
+            <StyledParagraph>Add to cart</StyledParagraph>
           </Button>
         )}
       </Grid>
