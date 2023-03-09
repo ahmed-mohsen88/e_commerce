@@ -1,9 +1,11 @@
+// please note that i get help in newFilter() function from github source and id did modifications for insert price filter
+// Link to source "https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72"
+// i cant find any place in submit page to write that so i make this comment
 export const newFilter = (products, filters) => {
   const filterKeys = Object.keys(filters);
   return products.filter((product) => {
     return filterKeys.every((key) => {
       if (!filters[key].length) return true;
-      // Loops again if product[key] is an array (for material attribute).
       if (Array.isArray(product[key])) {
         return product[key].some((keyEle) => filters[key].includes(keyEle));
       }
@@ -42,31 +44,16 @@ export const newFilter = (products, filters) => {
   });
 };
 
-export const filteredCollected = (filterStateClone) => {
-  const collectedTrueKeys = {
-    color: [],
-    gender: [],
-    type: [],
-    price: [],
-  };
-  const { color: updatedColor } = filterStateClone;
-  const { gender: updatedGender } = filterStateClone;
-  const { type: updatedType } = filterStateClone;
-  const { price: updatedPrice } = filterStateClone;
-
-  for (let colorKey in updatedColor) {
-    if (updatedColor[colorKey]) collectedTrueKeys.color.push(colorKey);
+export const trueKeyFilter = (filterStateSelector) => {
+  let obj = { color: [], gender: [], type: [], price: [] };
+  for (const [key, value] of Object.entries(filterStateSelector)) {
+    for (const [prop, boolVal] of Object.entries(value)) {
+      if (boolVal === true) {
+        obj[key].push(prop);
+      }
+    }
   }
-  for (let genderKey in updatedGender) {
-    if (updatedGender[genderKey]) collectedTrueKeys.gender.push(genderKey);
-  }
-  for (let typeKey in updatedType) {
-    if (updatedType[typeKey]) collectedTrueKeys.type.push(typeKey);
-  }
-  for (let priceKey in updatedPrice) {
-    if (updatedPrice[priceKey]) collectedTrueKeys.price.push(priceKey);
-  }
-  return collectedTrueKeys;
+  return obj;
 };
 
 export const arrayName = (el) => {

@@ -3,7 +3,7 @@ import React from "react";
 import { productsSelector } from "../../redux/mainSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSelector, setFilter } from "../../redux/filterSlice";
-import { newFilter, filteredCollected } from "../../assets/functions/functions";
+import { newFilter, trueKeyFilter } from "../../assets/functions/functions";
 import Color from "./Color";
 import Gender from "./Gender";
 import Price from "./Price";
@@ -23,7 +23,7 @@ function Sidebar({ stateProduct, handelChange }) {
       [searchProperty]: !reduxstate[filteredState][searchProperty],
     };
     dispatch(setFilter(reduxstate));
-    const selectedKeys = filteredCollected(reduxstate);
+    const selectedKeys = trueKeyFilter(reduxstate);
     const multiPropsFilter = newFilter(products, selectedKeys);
     handelChange(multiPropsFilter);
   };
